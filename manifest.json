@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Favicon Inspector",
+  "name": "IconPeek - Favicon Inspector",
   "version": "1.0",
   "description": "Shows all favicon and touch icons available on the current site",
 
