@@ -23,9 +23,9 @@ async function loadIcons() {
     });
     const currentTab = tabs[0];
 
-    // Update header with site info
-    siteTitle.textContent = currentTab.title || "Unknown Site";
-    siteUrl.textContent = currentTab.url;
+    // // Update header with site info
+    // siteTitle.textContent = currentTab.title || "Unknown Site";
+    // siteUrl.textContent = currentTab.url;
 
     // Get icons from content script
     const response = await browser.tabs.sendMessage(currentTab.id, {

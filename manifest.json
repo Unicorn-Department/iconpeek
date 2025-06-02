@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "IconPeek - Favicon Inspector",
-  "version": "1.0",
-  "description": "Shows all favicon and touch icons available on the current site",
+  "version": "0.2",
+  "description": "Shows favicon, touch icons and Windows tile icons provided by the current site",
 
   "permissions": ["activeTab"],
 
