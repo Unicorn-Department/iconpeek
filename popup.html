@@ -18,7 +18,7 @@
                 text-align: center;
                 margin-bottom: 20px;
                 padding-bottom: 10px;
-                /* border-bottom: 2px solid #e9ecef; */
+                border-bottom: 2px solid #e9ecef;
             }
 
             .site-title {
@@ -55,6 +55,7 @@
             }
 
             .icon-item {
+                position: relative;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -70,6 +71,67 @@
             .icon-item:hover {
                 transform: translateY(-2px);
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .icon-actions {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.8);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                opacity: 0;
+                transition: opacity 0.2s;
+                pointer-events: none;
+            }
+
+            .icon-item:hover .icon-actions {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .action-btn {
+                background: white;
+                color: #333;
+                border: none;
+                padding: 6px 10px;
+                border-radius: 4px;
+                font-size: 10px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .action-btn:hover {
+                background: #007bff;
+                color: white;
+            }
+
+            .action-btn.download {
+                background: #28a745;
+                color: white;
+            }
+
+            .action-btn.download:hover {
+                background: #1e7e34;
+            }
+
+            .action-btn.view {
+                background: #17a2b8;
+                color: white;
+            }
+
+            .action-btn.view:hover {
+                background: #117a8b;
             }
 
             .icon-image {
@@ -146,12 +208,20 @@
                 font-size: 12px;
                 cursor: pointer;
                 margin-top: 10px;
-                display: flex;
-                justify-content: center;
             }
 
             .refresh-btn:hover {
                 background: #0056b3;
+            }
+
+            .download-all-btn:hover {
+                background: #1e7e34 !important;
+            }
+
+            .download-all-btn:disabled {
+                background: #6c757d !important;
+                cursor: not-allowed;
+                opacity: 0.6;
             }
 
             .nav-links {
@@ -192,6 +262,25 @@
         <div class="header">
             <!-- <h1 class="site-title" id="siteTitle">Favicon Inspector</h1>
         <p class="site-url" id="siteUrl">Loading...</p> -->
+            <div
+                style="
+                    display: flex;
+                    gap: 8px;
+                    justify-content: center;
+                    align-items: center;
+                "
+            >
+                <button class="refresh-btn" id="refreshBtn">
+                    Refresh Icons
+                </button>
+                <button
+                    class="refresh-btn download-all-btn"
+                    id="downloadAllBtn"
+                    style="background: #28a745"
+                >
+                    Download All
+                </button>
+            </div>
 
             <div class="nav-links" id="navLinks">
                 <a class="nav-link hidden" href="#standard" id="navStandard"
@@ -209,10 +298,6 @@
             <div class="loading">
                 <p>Scanning page for icons...</p>
             </div>
-        </div>
-
-        <div>
-            <button class="refresh-btn" id="refreshBtn">Refresh Icons</button>
         </div>
 
         <script src="popup.js"></script>
