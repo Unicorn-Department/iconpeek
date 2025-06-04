@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <style>
             body {
-                width: 320px;
+                width: 400px;
                 min-height: 300px;
                 padding: 15px;
                 font-family:
@@ -18,7 +18,7 @@
                 text-align: center;
                 margin-bottom: 20px;
                 padding-bottom: 10px;
-                border-bottom: 2px solid #e9ecef;
+                /* border-bottom: 2px solid #e9ecef; */
             }
 
             .site-title {
@@ -80,6 +80,15 @@
                 background: white;
             }
 
+            .icon-image.ms-tile {
+                background: #00bcf2;
+                padding: 4px;
+            }
+
+            .icon-image.ms-tile.dark {
+                background: #2d89ef;
+            }
+
             .icon-info {
                 margin-top: 8px;
                 text-align: center;
@@ -137,24 +146,73 @@
                 font-size: 12px;
                 cursor: pointer;
                 margin-top: 10px;
+                display: flex;
+                justify-content: center;
             }
 
             .refresh-btn:hover {
                 background: #0056b3;
+            }
+
+            .nav-links {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 12px;
+                padding-top: 10px;
+                border-top: 1px solid #e9ecef;
+                flex-wrap: wrap;
+            }
+
+            .nav-link {
+                background: #f8f9fa;
+                color: #495057;
+                padding: 4px 8px;
+                border-radius: 12px;
+                text-decoration: none;
+                font-size: 10px;
+                font-weight: 500;
+                border: 1px solid #dee2e6;
+                transition: all 0.2s;
+                cursor: pointer;
+            }
+
+            .nav-link:hover {
+                background: #007bff;
+                color: white;
+                border-color: #007bff;
+            }
+
+            .nav-link.hidden {
+                display: none;
             }
         </style>
     </head>
     <body>
         <div class="header">
             <!-- <h1 class="site-title" id="siteTitle">Favicon Inspector</h1>
-            <p class="site-url" id="siteUrl">Loading...</p> -->
-            <button class="refresh-btn" id="refreshBtn">Refresh Icons</button>
+        <p class="site-url" id="siteUrl">Loading...</p> -->
+
+            <div class="nav-links" id="navLinks">
+                <a class="nav-link hidden" href="#standard" id="navStandard"
+                    >Standard</a
+                >
+                <a class="nav-link hidden" href="#apple" id="navApple">Apple</a>
+                <a class="nav-link hidden" href="#microsoft" id="navMicrosoft"
+                    >Microsoft</a
+                >
+                <a class="nav-link hidden" href="#other" id="navOther">Other</a>
+            </div>
         </div>
 
         <div id="content">
             <div class="loading">
                 <p>Scanning page for icons...</p>
             </div>
+        </div>
+
+        <div>
+            <button class="refresh-btn" id="refreshBtn">Refresh Icons</button>
         </div>
 
         <script src="popup.js"></script>

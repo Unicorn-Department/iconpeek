@@ -4,6 +4,21 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("refreshBtn").addEventListener("click", function () {
     loadIcons();
   });
+
+  // Add smooth scrolling for navigation links
+  document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("nav-link")) {
+      e.preventDefault();
+      const targetId = e.target.getAttribute("href").substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }
+  });
 });
 
 async function loadIcons() {
@@ -23,7 +38,7 @@ async function loadIcons() {
     });
     const currentTab = tabs[0];
 
-    // // Update header with site info
+    // Update header with site info
     // siteTitle.textContent = currentTab.title || "Unknown Site";
     // siteUrl.textContent = currentTab.url;
 
@@ -55,6 +70,7 @@ function displayIcons(icons) {
   if (!icons || icons.length === 0) {
     content.innerHTML =
       '<div class="no-icons"><p>No icons found on this page</p></div>';
+    hideAllNavLinks();
     return;
   }
 
@@ -79,12 +95,24 @@ function displayIcons(icons) {
   });
 
   let html = "";
+  const sectionsWithIcons = [];
+
+  // Mapping for nav links
+  const sectionMapping = {
+    "Standard Favicons": { id: "standard", navId: "navStandard" },
+    "Apple Touch Icons": { id: "apple", navId: "navApple" },
+    "Microsoft Tiles": { id: "microsoft", navId: "navMicrosoft" },
+    "Other Icons": { id: "other", navId: "navOther" },
+  };
 
   Object.keys(groupedIcons).forEach((category) => {
     const categoryIcons = groupedIcons[category];
     if (categoryIcons.length > 0) {
+      sectionsWithIcons.push(category);
+      const sectionId = sectionMapping[category].id;
+
       html += `
-                <div class="section">
+                <div class="section" id="${sectionId}">
                     <div class="section-title">${category} (${categoryIcons.length})</div>
                     <div class="icon-grid">
             `;
@@ -94,9 +122,13 @@ function displayIcons(icons) {
         const typeDisplay = icon.type.replace("image/", "") || "Unknown";
         const fileName = icon.url.split("/").pop().split("?")[0];
 
+        // Determine if this is a Microsoft tile icon
+        const isMsTile = icon.rel.includes("ms-application") || icon.metaName;
+        const msClass = isMsTile ? "ms-tile" : "";
+
         html += `
                     <div class="icon-item">
-                        <img class="icon-image"
+                        <img class="icon-image ${msClass}"
                              src="${icon.url}"
                              alt="Icon"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
@@ -120,9 +152,35 @@ function displayIcons(icons) {
   if (html === "") {
     content.innerHTML =
       '<div class="no-icons"><p>No icons found on this page</p></div>';
+    hideAllNavLinks();
   } else {
     content.innerHTML = html;
+    updateNavLinks(sectionsWithIcons, sectionMapping);
   }
+}
+
+function hideAllNavLinks() {
+  const navLinks = ["navStandard", "navApple", "navMicrosoft", "navOther"];
+  navLinks.forEach((navId) => {
+    const navElement = document.getElementById(navId);
+    if (navElement) {
+      navElement.classList.add("hidden");
+    }
+  });
+}
+
+function updateNavLinks(sectionsWithIcons, sectionMapping) {
+  // Hide all nav links first
+  hideAllNavLinks();
+
+  // Show nav links for sections that have icons
+  sectionsWithIcons.forEach((section) => {
+    const navId = sectionMapping[section].navId;
+    const navElement = document.getElementById(navId);
+    if (navElement) {
+      navElement.classList.remove("hidden");
+    }
+  });
 }
 
 // Handle image loading errors globally
